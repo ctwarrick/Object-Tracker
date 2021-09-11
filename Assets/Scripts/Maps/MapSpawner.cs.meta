@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: b1522775c3fe2c44b9a7599ac097e5ee
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - mockHorizontalPrefab: {fileID: 8856772264407210651, guid: 99f8373a6b92ef447bf8ea852f620902, type: 3}
+  - realHorizontalPrefab: {fileID: 6052223158423269200, guid: bdc0a77ffddf07045a58d502e06e6fd7, type: 3}
+  - horizontalMenuPrefab: {fileID: 876876672432344417, guid: defc944e77e61124096d75e3f3444aff, type: 3}
+  - handMenuPrefab: {fileID: 5620411876304274948, guid: b6521fde0a51ffe41bae2ad534335cbe, type: 3}
+  - mockVerticalPrefab: {fileID: 6331697399390468608, guid: 8a52a7e24b453af40bc8cec259ed73da, type: 3}
+  - realVerticalPrefab: {fileID: -8209051777372727367, guid: 219e2177d354ac249ad44411269c8156, type: 3}
+  executionOrder: -50
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
