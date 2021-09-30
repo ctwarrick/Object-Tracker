@@ -17,6 +17,8 @@ map settings to their needs.
 * Mixed Reality Toolkit Foundation 2.7.2
 * Mixed Reality Toolkit Standard Assets 2.7.2
 * Mixed Reality Toolkit Tools 2.7.2
+* Mixed Reality Scene Understanding 0.6.0
+* Mixed Reality Plane Finding 1.0.0
 * Mixed Reality OpenXR Plugin 1.0.1
 * Microsoft Spatializer 1.0.196
 
@@ -50,9 +52,11 @@ StreamingAssets\TrackedObjects.json.  If the arrival date is in the past, the ap
 not load the tracked objects.  I anticipate if this is ever used for anything in the real world, it would be consuming
 data from a Kafka stream or other data source, so I didn't make the flat file implementation very robust.  Before
 launching, edit TrackedObjects.json to ensure the arrival times are somewhere in the future.
+* There is code in MapSearchText.cs which is supposed to allow a response to user input such as "Zooming . . ." or 
+"Unknown Error" to fadeout after appearing and being read.  The text does not fade, but simply disappears when the 
+alpha value reaches 0.
 
 ## To do
 * Finish the overview map
-* Add the ability to enter a lat/long on the detail map and go there
 * Add the ability to query Bing Maps to show the street address of a tracked object at a given lat/long
 * Potentially add the ability to show the street address of a hand ray cursor when it hits the detail map

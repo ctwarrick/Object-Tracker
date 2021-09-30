@@ -6,7 +6,7 @@
         "Velocity" : 1,
         "Origin" : "SEA",
         "Destination" : "SHA",
-        "EstimatedArrival" : "9/30/2021"
+        "EstimatedArrival" : "9/30/2022"
     },
     {
         "Latitude" : 47.410869,
@@ -15,7 +15,7 @@
         "Velocity" : 1,
         "Origin" : "PDX",
         "Destination" : "SEA",
-        "EstimatedArrival" : "10/31/2021"
+        "EstimatedArrival" : "10/31/2022"
     },
     {
         "Latitude" : 47.460999,
@@ -24,7 +24,7 @@
         "Velocity" : 1,
         "Origin" : "SEA",
         "Destination" : "CLE",
-        "EstimatedArrival" : "10/20/2021"
+        "EstimatedArrival" : "10/20/2022"
     },
     {
         "Latitude" : 47.237828,
@@ -33,7 +33,7 @@
         "Velocity" : 1,
         "Origin" : "SEA",
         "Destination" : "SAN",
-        "EstimatedArrival" : "9/15/2021"
+        "EstimatedArrival" : "9/15/2022"
     },
     {
         "Latitude" : 47.214116,
@@ -42,6 +42,15 @@
         "Velocity" : 1,
         "Origin" : "LAX",
         "Destination" : "SEA",
-        "EstimatedArrival" : "10/25/2021"
+        "EstimatedArrival" : "10/25/2022"
+    },
+    {
+        "Latitude" : 40.684991,
+        "Longitude" : -74.009241,
+        "Altitude" : 1,
+        "Velocity" : 1,
+        "Origin" : "NYC",
+        "Destination" : "SEA",
+        "EstimatedArrival" : "6/1/2022"
     }
 ]

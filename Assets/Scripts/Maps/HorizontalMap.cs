@@ -1,15 +1,23 @@
 ﻿using System;
 using UnityEngine;
 using Microsoft.MixedReality.Toolkit.UI;
+using Microsoft.MixedReality.Toolkit.Experimental.UI;
+using Microsoft.Maps.Unity.Search;
 
 /// <summary>
 /// A detailed map where you can zoom in and out and see where tracked objects are.
 /// </summary>
 public class HorizontalMap : Map
 {
+    #region Serialized Fields
+    [SerializeField]
+    MapSearchText mapSearchText;
+    #endregion
+
     #region Fields
     //difference between min and max zoom
     private float _zoomDifference;
+    private MixedRealityKeyboard _mixedRealityKeyboard;
     #endregion
 
     #region Properties
@@ -57,6 +65,18 @@ public class HorizontalMap : Map
     {
         base.Start();
         _zoomDifference = mapRendererBase.MaximumZoomLevel - mapRendererBase.MinimumZoomLevel;
+
+        // Get keyboard and hide it till needed
+        _mixedRealityKeyboard = GetComponentInChildren<MixedRealityKeyboard>();
+        _mixedRealityKeyboard.HideKeyboard();
+    }
+
+    private void Update()
+    {
+        if (_mixedRealityKeyboard.Visible == true)
+        {
+            mapSearchText.SetText(_mixedRealityKeyboard.Text);
+        }
     }
 
     public void UpdateZoom(SliderEventData eventData)
@@ -78,4 +98,55 @@ public class HorizontalMap : Map
         Destroy(this.gameObject);
     }
     #endregion
+
+    public void SpawnKeyboard()
+    {
+        _mixedRealityKeyboard.ShowKeyboard("",false);
+    }
+
+    public async void CommitKeyboardAsync()
+    {
+        string query = _mixedRealityKeyboard.Text;
+        _mixedRealityKeyboard.HideKeyboard();
+        MapLocationFinderResult result = await MapLocationFinder.FindLocations(query);
+        mapSearchText.IsResponse = true;
+
+        // if status was bad, spawn error message, else process
+        if (result.Status != MapLocationFinderStatus.Success)
+        {
+            // Generate the error announcement
+            switch (result.Status)
+            {
+                case MapLocationFinderStatus.BadResponse:
+                    mapSearchText.SetText("Azure Error While Processing Response");
+                    break;
+                case MapLocationFinderStatus.Cancel:
+                    mapSearchText.SetText("Request Cancelled");
+                    break;
+                case MapLocationFinderStatus.InvalidCredentials:
+                    mapSearchText.SetText("Azure Credentials Invalid");
+                    break;
+                case MapLocationFinderStatus.NetworkFailure:
+                    mapSearchText.SetText("Network Error; Try Again");
+                    break;
+                case MapLocationFinderStatus.ServerError:
+                    mapSearchText.SetText("Azure Server Error");
+                    break;
+                case MapLocationFinderStatus.EmptyResponse:
+                    mapSearchText.SetText("No Such Location Found");
+                    break;
+                default:
+                    mapSearchText.SetText("Unknown Error");
+                    break;
+            }
+        }
+        else
+        {
+            mapSearchText.SetText("Zooming . . .");
+            // For now, just process the first result until I can code an expanding
+            // selection menu for the user to pick
+            MapLocation zoomLocation = result.Locations[0];
+            mapRendererBase.Center = zoomLocation.Point;
+        }    
+    }
 }
