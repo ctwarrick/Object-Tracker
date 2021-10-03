@@ -1,23 +1,33 @@
 ﻿using System;
+using System.Text;
 using UnityEngine;
+using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.Experimental.UI;
+using Microsoft.MixedReality.Toolkit.Utilities;
+using Microsoft.Maps.Unity;
 using Microsoft.Maps.Unity.Search;
+using Microsoft.Geospatial;
 
 /// <summary>
 /// A detailed map where you can zoom in and out and see where tracked objects are.
 /// </summary>
 public class HorizontalMap : Map
 {
+    #pragma warning disable 0649
     #region Serialized Fields
     [SerializeField]
     MapSearchText mapSearchText;
+    [SerializeField]
+    AddressTooltip addressTooltip;
     #endregion
+    #pragma warning restore 0649
 
     #region Fields
     //difference between min and max zoom
     private float _zoomDifference;
     private MixedRealityKeyboard _mixedRealityKeyboard;
+    private MapRenderer _mapRenderer;
     #endregion
 
     #region Properties
@@ -69,6 +79,7 @@ public class HorizontalMap : Map
         // Get keyboard and hide it till needed
         _mixedRealityKeyboard = GetComponentInChildren<MixedRealityKeyboard>();
         _mixedRealityKeyboard.HideKeyboard();
+        _mapRenderer = GetComponent<MapRenderer>();
     }
 
     private void Update()
@@ -97,7 +108,7 @@ public class HorizontalMap : Map
 
         Destroy(this.gameObject);
     }
-    #endregion
+    
 
     public void SpawnKeyboard()
     {
@@ -115,30 +126,7 @@ public class HorizontalMap : Map
         if (result.Status != MapLocationFinderStatus.Success)
         {
             // Generate the error announcement
-            switch (result.Status)
-            {
-                case MapLocationFinderStatus.BadResponse:
-                    mapSearchText.SetText("Azure Error While Processing Response");
-                    break;
-                case MapLocationFinderStatus.Cancel:
-                    mapSearchText.SetText("Request Cancelled");
-                    break;
-                case MapLocationFinderStatus.InvalidCredentials:
-                    mapSearchText.SetText("Azure Credentials Invalid");
-                    break;
-                case MapLocationFinderStatus.NetworkFailure:
-                    mapSearchText.SetText("Network Error; Try Again");
-                    break;
-                case MapLocationFinderStatus.ServerError:
-                    mapSearchText.SetText("Azure Server Error");
-                    break;
-                case MapLocationFinderStatus.EmptyResponse:
-                    mapSearchText.SetText("No Such Location Found");
-                    break;
-                default:
-                    mapSearchText.SetText("Unknown Error");
-                    break;
-            }
+            DisplayBadStatus(result.Status);
         }
         else
         {
@@ -149,4 +137,86 @@ public class HorizontalMap : Map
             mapRendererBase.Center = zoomLocation.Point;
         }    
     }
+
+    public async void SpawnToolTip(LatLonAlt latLonAlt)
+    {
+        LatLon query = latLonAlt.LatLon;
+
+        // Query bing for resulting lat/long
+        MapLocationFinderResult result = await MapLocationFinder.FindLocationsAt(query);
+
+        if (result.Status != MapLocationFinderStatus.Success)
+        {
+            // Generate the error announcement
+            mapSearchText.IsResponse = true;
+            DisplayBadStatus(result.Status);
+        }
+        else
+        {
+            // Instantiate the tooltip
+            AddressTooltip tooltip = Instantiate(addressTooltip);
+
+            // Put the tooltip at the position of the hand ray
+            Vector3 position = MapRendererTransformExtensions.TransformLatLonAltToWorldPoint
+                (_mapRenderer, latLonAlt);
+            tooltip.transform.position = position;
+
+            // There should only be one result for a LatLon, so pull it
+            MapLocation location = result.Locations[0];
+
+            // If the location is a US location with a street address,
+            // format it to conventional US standards
+            // If this is used in prod, will need a separate formatter for known other countries
+            if (location.Address.CountryRegion == "United States" && 
+                location.Address.AddressLine != "")
+            {
+                // Split string into street, city, state, ZIP, Country with commas
+                string[] splitAddress = location.Address.FormattedAddress.Split(',');
+
+                // Format address with newline after street
+                var sb = new StringBuilder();
+                sb.Append(splitAddress[0]);
+                sb.Append(Environment.NewLine);
+                sb.Append(splitAddress[1].Trim() + ",");
+                sb.Append(splitAddress[2]);
+                string address = sb.ToString();
+                tooltip.SetAddress(address);
+            }
+            else
+            {
+                tooltip.SetAddress(location.Address.FormattedAddress);
+            }
+        }
+    }
+
+    // Handles the standard bad responses from MapLocationFinder by displaying errors above the
+    // horizontal map menu
+    private void DisplayBadStatus(MapLocationFinderStatus status)
+    {
+        switch (status)
+        {
+            case MapLocationFinderStatus.BadResponse:
+                mapSearchText.SetText("Azure Error While Processing Response");
+                break;
+            case MapLocationFinderStatus.Cancel:
+                mapSearchText.SetText("Request Cancelled");
+                break;
+            case MapLocationFinderStatus.InvalidCredentials:
+                mapSearchText.SetText("Azure Credentials Invalid");
+                break;
+            case MapLocationFinderStatus.NetworkFailure:
+                mapSearchText.SetText("Network Error; Try Again");
+                break;
+            case MapLocationFinderStatus.ServerError:
+                mapSearchText.SetText("Azure Server Error");
+                break;
+            case MapLocationFinderStatus.EmptyResponse:
+                mapSearchText.SetText("No Such Location Found");
+                break;
+            default:
+                mapSearchText.SetText("Unknown Error");
+                break;
+        }
+    }
+    #endregion
 }

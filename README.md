@@ -46,6 +46,18 @@ in the application at various ports, airports, or loading docks throughout the r
 teardrop-shaped markers on the detail map.  By reaching a hand ray out and air tapping, you can spawn a detail box
 that shows various characteristics of the tracked object I thought could be relevant in this use case.
 
+Clicking on "Go To" will spawn the Hololens keyboard, and allow the user to type in a potential location to slew the
+map to.  Due to the MRTK Mixed Reality Keyboard not having built-in preview functionality, the text being typed shows
+up on the top of the horizontal map's menu.  It is helpful to move the menu and keyboard around so they are 
+reasonably next to each other before typing.  Hitting Enter executes a Bing Maps query and hides the keyboard.  If the
+typed location is valid, the location text will change to "Zooming . . ." and the map will slew to the commanded
+location.  If not, the text will display "No Such Location Found."  More rare Azure errors will spawn other error 
+messages as well.
+
+Clicking and holding on a spot on the map spawns a tooltip showing the street address (if listed) or locality of the 
+spot clicked on.  This is a longer click than needed for spawning the info dialog of a tracked object; it takes a bit
+of feel to get the difference down.
+
 ## Known issues
 * The arrival times of tracked objects, along with the rest of their info, is hardcoded in the file
 StreamingAssets\TrackedObjects.json.  If the arrival date is in the past, the application will throw an exception and
@@ -59,4 +71,3 @@ alpha value reaches 0.
 ## To do
 * Finish the overview map
 * Add the ability to query Bing Maps to show the street address of a tracked object at a given lat/long
-* Potentially add the ability to show the street address of a hand ray cursor when it hits the detail map

@@ -2115,7 +2115,7 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6052223158423269203, guid: bdc0a77ffddf07045a58d502e06e6fd7, type: 3}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: SelectAerialTiles
         m_Mode: 1
@@ -2650,7 +2650,7 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6052223158423269203, guid: bdc0a77ffddf07045a58d502e06e6fd7, type: 3}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: ToggleRoads
         m_Mode: 1
@@ -3217,7 +3217,7 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6052223158423269203, guid: bdc0a77ffddf07045a58d502e06e6fd7, type: 3}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: ToggleBuildings
         m_Mode: 1
@@ -4915,7 +4915,7 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6052223158423269203, guid: bdc0a77ffddf07045a58d502e06e6fd7, type: 3}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: ToggleLabels
         m_Mode: 1
@@ -5450,7 +5450,7 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6052223158423269203, guid: bdc0a77ffddf07045a58d502e06e6fd7, type: 3}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: SelectSymbolicTiles
         m_Mode: 1
@@ -15032,7 +15032,7 @@ MonoBehaviour:
     _list:
     - {fileID: 5485777310355091890}
   _hideTileLayerComponents: 1
-  _mapColliderType: 1
+  _mapColliderType: 2
   _mapCollider: {fileID: 5485777310355091569}
 --- !u!114 &5485777310355091893
 MonoBehaviour:
@@ -15079,7 +15079,19 @@ MonoBehaviour:
   _panSpeed: 0.5
   _onTapAndHold:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5485777310355091891}
+        m_TargetAssemblyTypeName: HorizontalMap, Assembly-CSharp
+        m_MethodName: SpawnToolTip
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
   _onDoubleTap:
     m_PersistentCalls:
       m_Calls: []
@@ -15141,6 +15153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapSearchText: {fileID: 4425268584960973958}
+  addressTooltip: {fileID: 5435071590174042419, guid: aaf28431fdc6d9c47bd79749221fcc21, type: 3}
 --- !u!114 &5485777310355091898
 MonoBehaviour:
   m_ObjectHideFlags: 0
