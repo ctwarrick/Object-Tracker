@@ -69,5 +69,4 @@ launching, edit TrackedObjects.json to ensure the arrival times are somewhere in
 alpha value reaches 0.
 
 ## To do
-* Finish the overview map
 * Add the ability to query Bing Maps to show the street address of a tracked object at a given lat/long

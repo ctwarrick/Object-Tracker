@@ -42,18 +42,25 @@ public class VerticalMap : Map
         Quaternion rotationCorrection = new Quaternion();
         rotationCorrection.eulerAngles = rotationCorrectionAngles;
         boundingBoxModel.transform.rotation = rotationCorrection;
+        
+        // Null out horizontal renderer for weird situation where it didn't spawn right
+        if (mapSpawner.HorizontalMapStatus != MapStatus.Real && horizontalRenderer != null)
+        {
+            horizontalRenderer = null;
+        }
     }
     protected void Update()
     {
         // If horizontal map newly spawned, get its renderer
         if (mapSpawner.HorizontalMapStatus == MapStatus.Real && horizontalRenderer == null)
         {
-            horizontalRenderer = GameObject.FindGameObjectWithTag("RealHorizontal").GetComponent<MapRendererBase>();
+            horizontalRenderer = GameObject.Find("HorizontalMap(Clone)").GetComponent<MapRendererBase>();
         }
 
         // If horizontal map spawned and bounds exist, get bounds and set yellow box
         // Else deactivate if active.  Set overview zoom to 50% of detail zoom or 1
         if (mapSpawner.HorizontalMapStatus == MapStatus.Real &&
+            horizontalRenderer != null &&
             horizontalRenderer.Bounds.TopRight.LatitudeInDegrees != 0)
         {
             if (boundingBoxModel.activeInHierarchy == false)

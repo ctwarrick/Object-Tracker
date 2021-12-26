@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300613c7b29001546be5f11c62fa47a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  realVerticalPrefab: {fileID: 4728948637726725402, guid: 219e2177d354ac249ad44411269c8156, type: 3}
+  realVerticalPrefab: {fileID: 3024177180579554569, guid: 219e2177d354ac249ad44411269c8156, type: 3}
 --- !u!114 &-6858914028098717943
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,8 @@
 # Change Log
+## 0.4.1
+Added a menu at the bottom of the vertical map to manipulate aerial and symbolic view,
+as well as roads and labels.  Fixed weird bug where horizontal map sometimes couldn't
+be found by its tag.
 ## 0.4.0
 Added the ability to use the vertical map as an overview, which follows the horizontal map
 at a slightly reduced zoom and displays a yellow bounding box showing the extent of the 
