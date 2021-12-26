@@ -14,6 +14,7 @@ using Microsoft.Geospatial;
 /// </summary>
 public class HorizontalMap : Map
 {
+    // Disabled because Visual Studio squawks at serialized fields
     #pragma warning disable 0649
     #region Serialized Fields
     [SerializeField]

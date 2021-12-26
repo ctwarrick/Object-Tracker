@@ -1,4 +1,8 @@
 # Change Log
+## 0.4.0
+Added the ability to use the vertical map as an overview, which follows the horizontal map
+at a slightly reduced zoom and displays a yellow bounding box showing the extent of the 
+horizontal map.  Updated to MRTK 2.7.3.
 ## 0.3.0
 Added the ability to long tap the map, which will spawn the street address or locality of 
 the point the hand ray cursor is located at.

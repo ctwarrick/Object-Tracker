@@ -26,7 +26,6 @@ public class MockHorizontalMap : MockMap
                                                       this.transform.position,
                                                       this.transform.rotation,
                                                       sceneContentTransform);
-        mapSpawner.HorizontalMapStatus = MapStatus.Real;
 
         // If map data cached for a move, re-import zoom from fields and center.
         if (mapSpawner.IsMapDataCached == true)
@@ -36,6 +35,7 @@ public class MockHorizontalMap : MockMap
             mapCenter = mapSpawner.StoredCenter;
             mapZoomLevel = mapSpawner.StoredZoomLevel;
         }
+        mapSpawner.HorizontalMapStatus = MapStatus.Real;
         Destroy(this.gameObject);
     }
     #endregion
